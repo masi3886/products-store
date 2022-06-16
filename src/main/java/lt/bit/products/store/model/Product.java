@@ -17,6 +17,14 @@ public class Product {
   private String description;
   private LocalDate created;
 
+  public static Product from(ProductRequest request) {
+    Product product = new Product();
+    product.setName(request.getName());
+    product.setDescription(request.getDescription());
+    product.setCreated(request.getCreated());
+    return product;
+  }
+
   public Integer getId() {
     return id;
   }
