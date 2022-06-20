@@ -28,7 +28,7 @@ public class ProductService {
   }
 
   public void deleteProduct(Integer id) {
-    repository.deleteStoreItems(id);// TODO: productItemsRepository
+    repository.deleteStoreItems(id);// TODO: productItemsRepository.delete...
     repository.deleteById(id);
   }
 
