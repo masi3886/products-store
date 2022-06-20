@@ -2,6 +2,7 @@ package lt.bit.products.store.service;
 
 import java.util.List;
 import lt.bit.products.store.model.Product;
+import lt.bit.products.store.model.ProductItems;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
@@ -10,9 +11,12 @@ import org.springframework.transaction.annotation.Transactional;
 public class ProductService {
 
   private final ProductRepository repository;
+  private final ProductItemsRepository productItemsRepository;
 
-  public ProductService(ProductRepository repository) {
+  public ProductService(ProductRepository repository,
+      ProductItemsRepository productItemsRepository) {
     this.repository = repository;
+    this.productItemsRepository = productItemsRepository;
   }
 
   public List<Product> findProducts() {
@@ -24,11 +28,15 @@ public class ProductService {
   }
 
   public void deleteProduct(Integer id) {
-    repository.deleteStoreItems(id);
+    repository.deleteStoreItems(id);// TODO: productItemsRepository
     repository.deleteById(id);
   }
 
   public Product saveProduct(Product product) {
     return repository.save(product);
+  }
+
+  public ProductItems getProductItems(Integer productId) {
+    return productItemsRepository.findById(productId).orElse(null);
   }
 }

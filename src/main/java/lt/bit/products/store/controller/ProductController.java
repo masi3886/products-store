@@ -2,6 +2,7 @@ package lt.bit.products.store.controller;
 
 import java.util.List;
 import lt.bit.products.store.model.Product;
+import lt.bit.products.store.model.ProductItems;
 import lt.bit.products.store.model.ProductRequest;
 import lt.bit.products.store.service.ProductService;
 import org.springframework.http.HttpStatus;
@@ -45,18 +46,24 @@ class ProductController {
     return ResponseEntity.ok(service.saveProduct(Product.from(productRequest, id)));
   }
 
-  @GetMapping
+  @GetMapping// TODO: add boolean withItems
   List<Product> fetchProducts() {
     return service.findProducts();
   }
 
-  @GetMapping(ID_MAPPING)
+  @GetMapping(ID_MAPPING)// TODO: add boolean withItems
   ResponseEntity<Product> fetchProduct(@PathVariable Integer id) {
     Product product = service.findProduct(id);
     if (product == null) {
       return ResponseEntity.notFound().build();
     }
     return ResponseEntity.ok(product);
+  }
+
+  @GetMapping(ID_MAPPING + "/items")
+  ResponseEntity<ProductItems> fetchProductItems(@PathVariable("id") Integer productId) {
+    ProductItems items = service.getProductItems(productId);
+    return items == null ? ResponseEntity.notFound().build() : ResponseEntity.ok(items);
   }
 
   @DeleteMapping(ID_MAPPING)
