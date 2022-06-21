@@ -23,12 +23,17 @@ public class ProductService {
     return repository.findAll();
   }
 
+  public long countProducts() {
+    return repository.count();
+  }
+
   public Product findProduct(Integer id) {
     return repository.findById(id).orElse(null);
   }
 
   public void deleteProduct(Integer id) {
-    repository.deleteStoreItems(id);// TODO: productItemsRepository.delete...
+//    productItemsRepository.deleteById(id);
+    productItemsRepository.deleteAllByProductId(id);
     repository.deleteById(id);
   }
 

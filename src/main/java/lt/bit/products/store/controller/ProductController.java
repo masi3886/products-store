@@ -46,18 +46,25 @@ class ProductController {
     return ResponseEntity.ok(service.saveProduct(Product.from(productRequest, id)));
   }
 
-  @GetMapping// TODO: add boolean withItems (e.g. /products?withItems=true)
+  @GetMapping
+// TODO: add boolean withItems (e.g. /products?withItems=true)
   List<Product> fetchProducts() {
     return service.findProducts();
   }
 
-  @GetMapping(ID_MAPPING)// TODO: add boolean withItems (e.g. /products?withItems=true)
+  @GetMapping(ID_MAPPING)
+// TODO: add boolean withItems (e.g. /products?withItems=true)
   ResponseEntity<Product> fetchProduct(@PathVariable Integer id) {
     Product product = service.findProduct(id);
     if (product == null) {
       return ResponseEntity.notFound().build();
     }
     return ResponseEntity.ok(product);
+  }
+
+  @GetMapping("/count")
+  long countProducts() {
+    return service.countProducts();
   }
 
   @GetMapping(ID_MAPPING + "/items")
