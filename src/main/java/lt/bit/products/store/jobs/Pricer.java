@@ -40,11 +40,13 @@ class Pricer {
       if (now.getHour() > 20) {
         newPrice = newPrice.multiply(BigDecimal.valueOf(0.8));
       }
+      item.setPrice(newPrice);
+      itemsRepository.save(item);
 
       LOG.info(String.format("ID: %d, OLD PRICE: %.2f, NEW PRICE: %.2f",
           item.getProductId(), oldPrice, newPrice));
     }
 
-    LOG.info("Product prices updated.");
+    LOG.info("Product prices have been updated.");
   }
 }
